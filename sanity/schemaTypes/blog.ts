@@ -16,9 +16,21 @@ export default {
       options: {source: 'title'},
     },
     {
+      name: 'author',
+      title: 'Author',
+      type: 'reference',
+      to: {type: 'author'},
+    },
+    {
       name: 'titleImage',
       type: 'image',
       title: 'Title Image',
+    },
+    {
+      name: 'categories',
+      title: 'Categories',
+      type: 'array',
+      of: [{type: 'reference', to: {type: 'category'}}],
     },
     {
       name: 'smallDescription',
