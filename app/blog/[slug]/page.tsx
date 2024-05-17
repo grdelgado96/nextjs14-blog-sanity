@@ -1,7 +1,8 @@
 import { fullBlog } from "@/app/lib/interface";
 import { client, urlFor } from "@/app/lib/sanity";
-import { PortableText } from "next-sanity";
+import { PortableText, PortableTextComponents } from "next-sanity";
 import Image from "next/image";
+import YouTubePlayer from "@/app/components/YouTubePlayer";
 
 export const revalidate = 30; // revalidate at most 30 seconds
 
@@ -24,7 +25,13 @@ export default async function BlogArticle({
 }) {
   const data: fullBlog = await getData(params.slug);
   console.log(data);
-
+  const serializers: PortableTextComponents = {
+    types: {
+      youtube: ({ value }: { value: { url: string } }) => {
+        return <YouTubePlayer url={value.url} />;
+      },
+    },
+  };
   return (
     <div className="mt-8">
       <h1>
@@ -44,7 +51,7 @@ export default async function BlogArticle({
         className="rounded-lg mt-8 border"
       ></Image>
       <div className="mt-16 prose hover:prose-blue prose-lg ">
-        <PortableText value={data.content} />
+        <PortableText value={data.content} components={serializers} />
       </div>
     </div>
   );

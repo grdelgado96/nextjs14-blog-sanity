@@ -1,3 +1,4 @@
+import {defineArrayMember} from 'sanity'
 export default {
   name: 'blog',
   type: 'document',
@@ -28,7 +29,14 @@ export default {
       name: 'content',
       type: 'array',
       title: 'Content',
-      of: [{type: 'block'}],
+      of: [
+        defineArrayMember({
+          type: 'block',
+        }),
+        defineArrayMember({
+          type: 'youtube',
+        }),
+      ],
     },
   ],
 }
